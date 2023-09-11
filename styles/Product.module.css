@@ -58,7 +58,12 @@
     border-spacing: 30px 10px;
 }
 
-.infoTable th {
+
+.infoTable li {
+    display: flex;
+}
+
+.infoTable .infoTitle {
     width: 115px;
     color: #b5b5b5;
     font-weight: 400;
