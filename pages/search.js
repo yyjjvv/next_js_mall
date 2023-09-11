@@ -1,31 +1,32 @@
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-
-import axios from "@/lib/axios";
 //components
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
 
-const Home = () => {
+const Search = () => {
     const [products, setProducts] = useState([]);
-    console.log(products)
+    const router = useRouter();
+    const { q } = router.query;
 
-    const getProducts = async () => {
-        const res = await axios.get(`/products`);
+    const getProducts = async (query) => {
+        const res = await axios.get(`/products/?q=${query}`);
         const newProducts = res.data.results;
         setProducts(newProducts);
     };
 
     useEffect(() => {
-        getProducts();
-    }, []);
+        getProducts(q);
+    }, [q]);
 
     return (
         <div>
-            <h1>Codeitmall</h1>
-            <SearchForm />
+            <h1>search 페이지</h1>
+            <SearchForm initialValue={q} />
+            <h2>{q} 검색 결과</h2>
             <ProductList products={products} />
         </div>
     );
 };
 
-export default Home;
+export default Search;
