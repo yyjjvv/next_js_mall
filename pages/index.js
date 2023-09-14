@@ -24,11 +24,8 @@ const Home = () => {
 
     return (
         <>
-            <Header />
-            <Container>
-                <SearchForm />
-                <ProductList className={styles.products} products={products} />
-            </Container>
+            <SearchForm />
+            <ProductList className={styles.products} products={products} />
         </>
     );
 };
