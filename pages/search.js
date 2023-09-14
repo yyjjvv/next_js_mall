@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useState, useEffect } from "react";
 
 import axios from "@/api/axios";
@@ -24,6 +25,9 @@ const Search = () => {
 
     return (
         <>
+            <Head>
+                <title>{q} 검색 결과 - Codeitmall</title>
+            </Head>
             <SearchForm initialValue={q} />
             <h2 className={styles.title}>
                 <span className={styles.keyword}>{q}</span> 검색 결과

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState, useEffect } from "react";
 
 import axios from "@/api/axios";
@@ -8,7 +9,6 @@ import ProductList from "@/components/ProductList";
 
 const Home = () => {
     const [products, setProducts] = useState([]);
-    console.log(products);
 
     const getProducts = async () => {
         const res = await axios.get(`/products`);
@@ -22,6 +22,9 @@ const Home = () => {
 
     return (
         <>
+            <Head>
+                <title>Codeitmall</title>
+            </Head>
             <SearchForm />
             <ProductList className={styles.products} products={products} />
         </>

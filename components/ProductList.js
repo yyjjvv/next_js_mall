@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import styles from "./ProductList.module.css";
 //components
-import StarRating from "./StarRating";
 import Product from "./Product";
 
 const ProductList = ({ className = "", products }) => {

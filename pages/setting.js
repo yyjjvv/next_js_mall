@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { useTheme } from "@/context/ThemeContext";
 
 import styles from "@/styles/Setting.module.css";
@@ -8,6 +10,9 @@ const Setting = () => {
     const { theme, setTheme } = useTheme();
     return (
         <>
+        <Head>
+                <title>설정 - Codeitmall</title>
+            </Head>
             <h1 className={styles.title}>설정</h1>
             <section className={styles.section}>
                 <h2 className={styles.sectionTitle}>테마 설정</h2>
