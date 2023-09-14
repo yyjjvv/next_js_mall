@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import styles from "./Product.module.css";
 import StarRating from "./StarRating";
@@ -7,11 +8,9 @@ const Product = ({ product }) => {
     return (
         <li>
             <Link className={styles.product} href={`/items/${product.id}`}>
-                <img
-                    className={styles.image}
-                    src={product.imgUrl}
-                    alt={product.name}
-                />
+                <div className={styles.image}>
+                    <Image src={product.imgUrl} alt={product.name} sizes="100%" fill />
+                </div>
                 <div className={styles.content}>
                     <div>
                         <span className={styles.name}>{product.name}</span>

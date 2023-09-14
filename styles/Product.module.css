@@ -28,9 +28,16 @@
 }
 
 .image {
+    position: relative;
     border-radius: 10px;
-    width: 100%;
+    width: 500px;
+    height: 500px;
     aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.image img {
+    object-fit: cover;
 }
 
 .section + .section {
@@ -57,7 +64,6 @@
     border: none;
     border-spacing: 30px 10px;
 }
-
 
 .infoTable li {
     display: flex;
