@@ -7,18 +7,31 @@ import styles from "@/styles/Home.module.css";
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
 
-const Home = () => {
-    const [products, setProducts] = useState([]);
-
-    const getProducts = async () => {
-        const res = await axios.get(`/products`);
-        const newProducts = res.data.results;
-        setProducts(newProducts);
+//정적 생성
+//build할 때 html을 미리 만들어둠
+//자주 바뀌는 데이터는 정적 생성이 부적합
+export const getStaticProps = async () => {
+    const res = await axios.get(`/products`);
+    const products = res.data.results;
+    return {
+        props: {
+            products,
+        },
     };
+};
 
-    useEffect(() => {
-        getProducts();
-    }, []);
+const Home = ({ products }) => {
+    // const [products, setProducts] = useState([]);
+
+    // const getProducts = async () => {
+    //     const res = await axios.get(`/products`);
+    //     const newProducts = res.data.results;
+    //     setProducts(newProducts);
+    // };
+
+    // useEffect(() => {
+    //     getProducts();
+    // }, []);
 
     return (
         <>
