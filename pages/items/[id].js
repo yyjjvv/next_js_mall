@@ -8,19 +8,40 @@ import styles from "@/styles/Product.module.css";
 import SizeReviewList from "@/components/SizeReviewList";
 import ProductDetailInfo from "@/components/ProductDetail/ProductDetailInfo";
 
-export const getStaticPaths = async () => {
-    const res = await axios.get(`/products/`);
-    const products = res.data.results;
-    const paths = products.map((product) => ({
-        params: { id: String(product.id) },
-    }));
-    return {
-        paths,
-        fallback: true, //없는 경로 처리
-    };
-};
+//정적 생성과 서버 사이드 렌더링은 같이 사용 불가
+//case: 정적 생성 
+// export const getStaticPaths = async () => {
+//     const res = await axios.get(`/products/`);
+//     const products = res.data.results;
+//     const paths = products.map((product) => ({
+//         params: { id: String(product.id) },
+//     }));
+//     return {
+//         paths,
+//         fallback: true, //없는 경로 처리
+//     };
+// };
 
-export const getStaticProps = async (context) => {
+// export const getStaticProps = async (context) => {
+//     const productId = context.params["id"];
+//     let product;
+//     try {
+//         const res = await axios.get(`/products/${productId}`);
+//         product = res.data;
+//     } catch {
+//         return {
+//             notFound: true,
+//         };
+//     }
+
+//     return {
+//         props: {
+//             product,
+//         },
+//     };
+// };
+
+export const getServerSideProps = async (context) => {
     const productId = context.params["id"];
     let product;
     try {
@@ -32,18 +53,22 @@ export const getStaticProps = async (context) => {
         };
     }
 
+    const res = await axios.get(`/size_reviews/?product_id=${productId}`);
+    const sizeReviews = res.data.results ?? [];
+
     return {
         props: {
             product,
+            sizeReviews,
         },
     };
 };
 
-const Product = ({ product }) => {
+const Product = ({ product, sizeReviews }) => {
     // const [product, setProduct] = useState();
-    const [sizeReviews, setSizeReviews] = useState();
-    const router = useRouter();
-    const { id } = router.query; // 왜 id? [파일명]을 따라감. 즉, 만약 파일명이 [productId] 라면, productId 이 될 것
+    // const [sizeReviews, setSizeReviews] = useState();
+    // const router = useRouter();
+    // const { id } = router.query; // 왜 id? [파일명]을 따라감. 즉, 만약 파일명이 [productId] 라면, productId 이 될 것
 
     // const getProduct = async (targetId) => {
     //     const res = await axios.get(`/products/${targetId}`);
@@ -51,17 +76,17 @@ const Product = ({ product }) => {
     //     setProduct(newProduct);
     // };
 
-    const getSizeReviews = async (targetId) => {
-        const res = await axios.get(`/size_reviews/?product_id=${targetId}`);
-        const newSizeReviews = res.data.results ?? [];
-        setSizeReviews(newSizeReviews);
-    };
+    // const getSizeReviews = async (targetId) => {
+    //     const res = await axios.get(`/size_reviews/?product_id=${targetId}`);
+    //     const newSizeReviews = res.data.results ?? [];
+    //     setSizeReviews(newSizeReviews);
+    // };
 
-    useEffect(() => {
-        if (!id) return;
-        // getProduct(id);
-        getSizeReviews(id);
-    }, [id]);
+    // useEffect(() => {
+    //     if (!id) return;
+    //     getProduct(id);
+    //     getSizeReviews(id);
+    // }, [id]);
 
     // if (!product) return null;
     if (!product) return <div className={styles.loading}>Loading..</div>;

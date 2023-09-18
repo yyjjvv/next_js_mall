@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 import axios from "@/api/axios";
 import styles from "@/styles/Home.module.css";

@@ -1,6 +1,4 @@
-import { useRouter } from "next/router";
 import Head from "next/head";
-import { useState, useEffect } from "react";
 
 import axios from "@/api/axios";
 import styles from "@/styles/Search.module.css";
@@ -8,20 +6,33 @@ import styles from "@/styles/Search.module.css";
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
 
-const Search = () => {
-    const [products, setProducts] = useState([]);
-    const router = useRouter();
-    const { q } = router.query;
-
-    const getProducts = async (query) => {
-        const res = await axios.get(`/products/?q=${query}`);
-        const newProducts = res.data.results;
-        setProducts(newProducts);
+//왜 정적 생성이 아닌 서버 사이드 렌더링?
+//검색어는 매번 바뀌기 때문에 정적 생성으로 미리 만들어 놓을 수 없기 때문
+export const getServerSideProps = async (context) => {
+    const q = context.query["q"];
+    const res = await axios.get(`/products/?q=${q}`);
+    const products = res.data.results;
+    return {
+        props: {
+            q,
+            products,
+        },
     };
+};
+const Search = ({ q, products }) => {
+    // const [products, setProducts] = useState([]);
+    // const router = useRouter();
+    // const { q } = router.query;
 
-    useEffect(() => {
-        getProducts(q);
-    }, [q]);
+    // const getProducts = async (query) => {
+    //     const res = await axios.get(`/products/?q=${query}`);
+    //     const newProducts = res.data.results;
+    //     setProducts(newProducts);
+    // };
+
+    // useEffect(() => {
+    //     getProducts(q);
+    // }, [q]);
 
     return (
         <>
